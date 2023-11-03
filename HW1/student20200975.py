@@ -1,4 +1,4 @@
-!/usr/bin/python3
+#!/usr/bin/python3
 
 from openpyxl import load_workbook
 
@@ -30,19 +30,19 @@ def grade(total, totallist, num):
     else:
         return 'C'
      
-wb = load_workbook(filename='student.xlsx')
+wb = load_workbook(r'C:\python\02_python엑셀\student.xlsx')
 ws = wb.active
 
 totallist = []
 
 # 두번째 행부터 total구하기
 for row in ws.iter_rows(min_row=2):
-    total = ((row[2]*0.3) + (row[3]*0.35) + (row[4]*0.34) + (row[5]*0.1))
-    row[6] = total
+    total = ((row[2].value*0.3) + (row[3].value*0.35) + (row[4].value*0.34) + (row[5].value*0.1))
+    row[6].value = total
 
 #total기준으로 정렬한 리스트 생성
 for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
-    total = row[6]
+    total = row[6].value
     totallist.append(total)
 
 totallist = sorted(totallist)
@@ -51,6 +51,6 @@ num = ws.max_row - 1
 
 #ws순회하면서 학점 넣기
 for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
-    row[7] = grade(row[6], totallist, num)
+    row[7].value = grade(row[6].value, totallist, num)
 
-wb.save(filename='student_result.xlsx')
+wb.save(r'C:\python\02_python엑셀\student.xlsx')
