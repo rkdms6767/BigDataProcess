@@ -43,7 +43,7 @@ for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
     total = row[6].value
     totallist.append(total)
 
-totallist = sorted(totallist)
+totallist = sorted(totallist, reverse=True)
 
 num = ws.max_row - 1
 
