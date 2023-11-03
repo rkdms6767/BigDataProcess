@@ -28,7 +28,7 @@ def grade(total, totallist, num):
     else:
         return 'A+'
      
-wb = load_workbook(r'C:\python\02_python엑셀\student.xlsx')
+wb = load_workbook(filename='student.xlsx')
 ws = wb.active
 
 totallist = []
@@ -51,4 +51,4 @@ num = ws.max_row - 1
 for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
     row[7].value = grade(row[6].value, totallist, num)
 
-wb.save(r'C:\python\02_python엑셀\student.xlsx')
+wb.save(filename='student.xlsx')
