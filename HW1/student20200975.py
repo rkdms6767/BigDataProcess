@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+!/usr/bin/python3
 
 from openpyxl import load_workbook
 
@@ -7,26 +7,28 @@ def grade(total, totallist, num):
     #학점을 받을 수 있는 학생 수
     A = int(0.3 * num)
     B = int(0.7 * num)
-    A_Plus = min(A, int(0.5 * A))
-    B_Plus = min(B, int(0.5 * B))
-    C_Plus = min(int(0.5 * (0.9 * num)))
+    A_Plus = int(0.5 * A)
+    B_Plus = int(0.5 * B)
+    C_Plus = int(0.5 * (0.9 * num))
     
 
     #(totallist)학점을 받을 수 있는 마지막 학생의 점수와 각 행의 total의 점수를 비교해서 학점 넣기
     if total < 40:
         return 'F'
-    elif total >= totallist[int(0.9 * num) -1]:
-        return 'C'
-    elif total >= totallist[C_Plus - 1]:
+    
+
+    if total >= totallist[int(0.9 * num) -1]:
+        if total >= totallist[C_Plus - 1]:
+            if  total >= totallist[B - 1]:
+                if total >= totallist[B_Plus - 1]:
+                    if total >= totallist[A - 1]:
+                        if total >= totallist[A_Plus - 1]:
+                            return 'A+'
+                        return 'A'
+                    return 'B'
+                return 'B+'
+            return 'C'
         return 'C+'
-    elif  total >= totallist[B - 1]:
-        return 'B'
-    elif total >= totallist[B_Plus - 1]:
-        return 'B+'
-    elif total >= totallist[A - 1]:
-        return 'A'
-    else:
-        return 'A+'
      
 wb = load_workbook(filename='student.xlsx')
 ws = wb.active
@@ -43,7 +45,7 @@ for row in ws.iter_rows(min_row=2, max_row=ws.max_row):
     total = row[6].value
     totallist.append(total)
 
-totallist = sorted(totallist, reverse=True)
+totallist = sorted(totallist,  reverse=True)
 
 num = ws.max_row - 1
 
